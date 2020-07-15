@@ -1,28 +1,33 @@
 <template>
     <div>
         <form>
+            <p>
             <label>
                 Email:
                 <input type="email" v-model="email">
-            </label>
-            <label>
-                Username:
-                <input v-model="username">
-            </label>
-            <label>
-                Password:
-                <input type="password" v-model="password">
-            </label>
+                </label>
+            </p>
+            <p>
+                <label>
+                    Username:
+                    <input v-model="username">
+                </label>
+            </p>
+            <p>
+                <label>
+                    Password:
+                    <input type="password" v-model="password">
+                </label>
+            </p>
             <button type="button" @click="post_request">Submit</button>
         </form>
 
         <p v-if="error">
             {{error.message}}
         </p>
-
-        {{ this.username }}
-        {{ this.email }}
-        {{ this.response }}
+        <p>
+            {{ this.response }}
+        </p>
     </div>
 </template>
 
@@ -30,9 +35,10 @@
     import {HTTP} from '../http-common.js'
 
     export default {
+        name: "Register",
         data() {
             return {
-                response: [],
+                response: '',
                 email: '',
                 username: '',
                 password: '',
@@ -48,7 +54,6 @@
                 })
                     .then(response => {
                         this.response = response.data
-                        console.log(this.response)
                     })
                     .catch(e => {
                         this.error = e;
@@ -58,6 +63,15 @@
     }
 </script>
 
-<style scoped>
-
+<style>
+    button {
+        font-family: Avenir, Helvetica, Arial, sans-serif;
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 10px 16px;
+        text-decoration: none;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
 </style>
