@@ -53,7 +53,8 @@
                     password: this.password,
                 })
                     .then(response => {
-                        this.response = response.data
+                        this.response = response.data;
+                        this.$router.push("login");
                     })
                     .catch(e => {
                         this.error = e;

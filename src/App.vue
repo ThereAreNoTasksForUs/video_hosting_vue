@@ -1,19 +1,31 @@
 <template>
-  <div id="app">
-    <router-link to="/"> Index Page |</router-link>
-    <router-link to="/login"> Login Page |</router-link>
-    <router-link to="/register"> Register Page </router-link>
+  <div id="app" :key="token">
+    <router-link to="/"> Index Page </router-link>
+    <div v-if="!token">
+      <router-link to="/login"> Login Page </router-link>
+      <router-link to="/register"> Register Page </router-link>
+    </div>
+    <div v-else>
+      <Logout/>
+    </div>
     <hr>
     <router-view/>
+    token: {{token}}
   </div>
 </template>
 
 <script>
-  import Login from "./components/Login";
+  import Logout from "./components/Logout";
   export default {
     name: 'App',
-    components: Login,
-
+    components: {
+      Logout,
+    },
+    data() {
+      return {
+        token: this.$cookies.isKey('session'),
+      }
+    }
   }
 
 </script>

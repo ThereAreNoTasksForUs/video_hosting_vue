@@ -40,8 +40,10 @@
                     password: this.password,
                 })
                     .then(response => {
-                        this.response = response.data
-                        this.token = this.response['token']
+                        this.response = response.data;
+                        this.token = this.response['token'];
+                        this.$cookies.set('session', this.token, 0);
+                        this.$router.push("index");
                     })
                     .catch(e => {
                         this.error = e;

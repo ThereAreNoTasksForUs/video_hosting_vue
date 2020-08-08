@@ -5,4 +5,4 @@ export const HTTP = axios.create({
     headers: {
         'Content-type': 'application/json',
     }
-})
+});
