@@ -4,14 +4,20 @@
             <p>
                 <label>
                     Username:
-                    <input v-model="username">
+                    <input v-model="username" @blur="$v.username.$touch()">
                 </label>
+                <span v-if="$v.username.$error">
+                    Field required!
+                </span>
             </p>
             <p>
                 <label>
                     Password:
-                    <input type="password" v-model="password">
+                    <input type="password" v-model="password" @blur="$v.password.$touch()">
                 </label>
+                <span v-if="$v.password.$error">
+                    Field required!
+                </span>
             </p>
             <button type="button" @click="post_request">Submit</button>
         </form>
@@ -21,6 +27,8 @@
 
 <script>
     import {HTTP} from "../http-common";
+    import { required } from 'vuelidate/lib/validators';
+
 
     export default {
         name: "Login",
@@ -35,6 +43,12 @@
         },
         methods: {
             post_request: function(){
+                this.$v.$touch();
+
+                if (this.$v.$invalid) {
+                    return;
+                }
+
                 HTTP.post(`auth/login`, {
                     username: this.username,
                     password: this.password,
@@ -42,12 +56,23 @@
                     .then(response => {
                         this.response = response.data;
                         this.token = this.response['token'];
-                        this.$cookies.set('session', this.token, 0);
-                        this.$router.push("index");
                     })
                     .catch(e => {
                         this.error = e;
                     })
+
+                if (this.error === null) {
+                    this.$cookies.set('session', this.token, 0);
+                    this.$router.push("index");
+                }
+            }
+        },
+        validations: {
+            username: {
+                required,
+            },
+            password: {
+                required,
             }
         }
     }

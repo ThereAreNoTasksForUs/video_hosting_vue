@@ -4,7 +4,7 @@
             <p>
                 <label>
                     Email:
-                    <input type="email" v-model="email" @blur="$v.email.$touch()">
+                    <input type="email" v-model.trim="email" @blur="$v.email.$touch()">
                 </label>
                 <span v-if="$v.email.$error">
                     <template v-if="!$v.email.email">
@@ -18,7 +18,7 @@
             <p>
                 <label>
                     Username:
-                    <input v-model="username" @blur="$v.username.$touch()">
+                    <input v-model.trim="username" @blur="$v.username.$touch()">
                 </label>
                 <span v-if="$v.username.$error">
                     Field required!
@@ -27,7 +27,7 @@
             <p>
                 <label>
                     Password:
-                    <input type="password" v-model="password" @blur="$v.password.$touch()">
+                    <input type="password" v-model.trim="password" @blur="$v.password.$touch()">
                 </label>
                 <span v-if="$v.password.$error">
                     <template v-if="!$v.password.minLength">
@@ -53,7 +53,7 @@
             <p>
                 <label>
                     Confirm password:
-                    <input type="password" v-model="confirm_password" @blur="$v.confirm_password.$touch()">
+                    <input type="password" v-model.trim="confirm_password" @blur="$v.confirm_password.$touch()">
                 </label>
                 <span v-if="$v.confirm_password.$error">
                     <template v-if="!$v.confirm_password.sameAsPassword">
