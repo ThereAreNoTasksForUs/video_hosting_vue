@@ -19,9 +19,11 @@
                     Field required!
                 </span>
             </p>
-            <button type="button" @click="post_request">Submit</button>
+            <button type="button" @click="submit">Submit</button>
         </form>
+        <a>{{ this.error }}</a>
         <a>{{ this.token }}</a>
+        <a>{{ this.response }}</a>
     </div>
 </template>
 
@@ -36,34 +38,37 @@
             return {
                 response: null,
                 token: null,
-                username: '',
-                password: '',
+                username: null,
+                password: null,
                 error: null,
             }
         },
         methods: {
-            post_request: function(){
-                this.$v.$touch();
+            post_request: async function(){
+                return HTTP.post(`auth/login`, {
+                    username: this.username,
+                    password: this.password,
+                })
+            },
 
+            submit: async function(){
+                this.$v.$touch();
                 if (this.$v.$invalid) {
                     return;
                 }
 
-                HTTP.post(`auth/login`, {
-                    username: this.username,
-                    password: this.password,
-                })
+                await this.post_request()
                     .then(response => {
-                        this.response = response.data;
-                        this.token = this.response['token'];
-                    })
+                    this.response = response.data;
+                })
                     .catch(e => {
-                        this.error = e;
-                    })
+                        this.error = e.response.data.Error;
+                });
 
                 if (this.error === null) {
+                    this.token = this.response.token
                     this.$cookies.set('session', this.token, 0);
-                    this.$router.push("index");
+                    await this.$router.push("index");
                 }
             }
         },

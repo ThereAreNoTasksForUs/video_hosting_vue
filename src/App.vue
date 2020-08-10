@@ -1,7 +1,7 @@
 <template>
-  <div id="app" :key="token">
+  <div id="app" :key="isToken">
     <router-link to="/"> Index Page </router-link>
-    <div v-if="!token">
+    <div v-if="!isToken">
       <router-link to="/login"> Login Page </router-link>
       <router-link to="/register"> Register Page </router-link>
     </div>
@@ -10,7 +10,7 @@
     </div>
     <hr>
     <router-view/>
-    token: {{token}}
+    token: {{ isToken }}
   </div>
 </template>
 
@@ -23,7 +23,7 @@
     },
     data() {
       return {
-        token: this.$cookies.isKey('session'),
+        isToken: this.$cookies.isKey('session'),
       }
     }
   }

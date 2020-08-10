@@ -64,7 +64,7 @@
                     </template>
                 </span>
             </p>
-            <button type="button" @click="post_request">Submit</button>
+            <button type="button" @click="submit">Submit</button>
         </form>
 
         <p v-if="error">
@@ -93,14 +93,7 @@
             }
         },
         methods: {
-            post_request: function(){
-
-                this.$v.$touch();
-
-                if (this.$v.$invalid) {
-                    return;
-                }
-
+            post_request: function() {
                 HTTP.post(`auth/register`, {
                     email: this.email,
                     username: this.username,
@@ -113,6 +106,15 @@
                     .catch(e => {
                         this.error = e;
                     })
+            },
+            submit: async function () {
+                this.$v.$touch();
+
+                if (this.$v.$invalid) {
+                    return;
+                }
+
+                await this.post_request();
             }
         },
         validations: {
