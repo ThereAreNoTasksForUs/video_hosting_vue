@@ -1,19 +1,33 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app" :key="isToken">
+    <router-link to="/"> Index Page </router-link>
+    <div v-if="!isToken">
+      <router-link to="/login"> Login Page </router-link>
+      <router-link to="/register"> Register Page </router-link>
+    </div>
+    <div v-else>
+      <Logout/>
+    </div>
+    <hr>
+    <router-view/>
+    token: {{ isToken }}
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
+  import Logout from "./components/Logout";
+  export default {
+    name: 'App',
+    components: {
+      Logout,
+    },
+    data() {
+      return {
+        isToken: this.$cookies.isKey('session'),
+      }
+    }
   }
-}
+
 </script>
 
 <style>
