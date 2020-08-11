@@ -6,6 +6,7 @@
       <router-link to="/register"> Register Page </router-link>
     </div>
     <div v-else>
+      <router-link to="/profile"> Profile </router-link>
       <Logout/>
     </div>
     <hr>

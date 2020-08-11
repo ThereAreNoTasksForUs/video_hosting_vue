@@ -66,9 +66,9 @@
                 });
 
                 if (this.error === null) {
-                    this.token = this.response.token
+                    this.token = this.response.token;
                     this.$cookies.set('session', this.token, 0);
-                    await this.$router.push("index");
+                    await this.$router.push('/');
                 }
             }
         },
