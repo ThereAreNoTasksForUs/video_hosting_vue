@@ -21,6 +21,11 @@ export default new Router({
             path: '/register',
             name: 'register',
             component: () => import('./components/Register.vue')
+        },
+        {
+            path: '/channel/create',
+            name: 'channelCreation',
+            component: () => import('./components/ChannelCreation.vue')
         }
     ]
 
