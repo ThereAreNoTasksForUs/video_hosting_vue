@@ -7,6 +7,7 @@
     </div>
     <div v-else>
       <Logout/>
+      <router-link to="/channel/create">Create channel</router-link>
     </div>
     <hr>
     <router-view/>
