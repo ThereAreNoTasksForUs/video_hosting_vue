@@ -3,11 +3,11 @@
     <form>
       <label>
         Channel name:
-        <input v-model="name" type="text">
+        <input v-model="name" type="text" maxlength="100" @blur="$v.name.$touch()">
       </label>
       <label>
         Channel information:
-        <input v-model="inform" type="text">
+        <input v-model="inform" type="text" @blur="$v.inform.$touch()">
       </label>
       <button type="button" @click="submit">Submit</button>
     </form>
@@ -16,6 +16,8 @@
 
 <script>
   import {HTTP} from "@/http-common";
+  import { required } from 'vuelidate/lib/validators';
+
   export default {
     name: "ChannelCreation",
     data() {
@@ -38,15 +40,28 @@
         })
       },
       submit: async function(){
+        this.$v.$touch();
+        if (this.$v.$invalid) {
+          return;
+        }
+
         await this.post_request()
             .then(response => {
               this.response = response.data;
             })
             .catch(e => {
-              this.error = e.response.data.Error;
+              this.error = e;
             });
       }
     },
+    validations: {
+      name: {
+        required,
+      },
+      inform: {
+        required,
+      }
+    }
   }
 </script>
 
